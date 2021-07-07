@@ -7,8 +7,10 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
         fields = [
             'id',
-            'position_team1',
-            'result',
+            'atack_team1',
+            'winner_team1',
+            'goals_team1',
+            'goals_team2',
             'meeting_id'
         ]
 
