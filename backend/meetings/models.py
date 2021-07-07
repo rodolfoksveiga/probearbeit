@@ -1,33 +1,44 @@
 from django.utils.translation import gettext_lazy as _
 from django.db.models import (
-    CASCADE,
     Model,
     DateTimeField,
     CharField,
-    ForeignKey,
-    BooleanField
+    IntegerField,
+    ManyToManyField
 )
+
+from players.models import Player
 
 class Meeting(Model):
     date_time = DateTimeField(
-        _('Date/Time'),
-        auto_now=True
+        _('Date/Time')
+    )
+    local_choices = (
+        ('munchen', 'Munschen'),
+        ('wurzburg', 'Wurzburg'),
+        ('berlin', 'Berlin')
     )
     local = CharField(
         _('Local'),
-        max_length=100
+        choices=local_choices,
+        max_length=50
     )
-    mode = CharField(
+    mode_choices = (
+        (1, 'One-Match'),
+        (3, 'Best of 3'),
+        (5, 'Best of 5')
+    )
+    mode = IntegerField(
         _('Game mode'),
-        max_length=100
+        choices=mode_choices
     )
-    team1 = CharField(
-        _('Members of Team 1'),
-        max_length=100
+    team1 = ManyToManyField(
+        Player,
+        related_name='meetings_team1'
     )
-    team2 = CharField(
-        _('Members of Team 2'),
-        max_length=100
+    team2 = ManyToManyField(
+        Player,
+        related_name='meetings_team2'
     )
 
     def __str__(self):
