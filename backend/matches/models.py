@@ -23,10 +23,10 @@ class Match(Model):
     )
 
     def __str__(self):
-        if winner_team1:
+        if self.winner_team1:
             winner = 'Team 1'
         else:
             winner = 'Team 2'
 
-        return 'Winner {}'.format(winner)
+        return 'Winner: {}'.format(winner)
 
