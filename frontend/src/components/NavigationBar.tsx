@@ -12,8 +12,7 @@ export default function NavigationBar() {
             <Navbar.Collapse className="justify-content-end">
                 <Nav className="ml-2 ml-md-0 mr-md-2">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/matches/">Meetings</Nav.Link>
-                    <Nav.Link href="/matches/">Matches</Nav.Link>
+                    <Nav.Link href="/meetings/">Meetings</Nav.Link>
                     <Nav.Link href="/players/">Players</Nav.Link>
                 </Nav>
             </Navbar.Collapse>

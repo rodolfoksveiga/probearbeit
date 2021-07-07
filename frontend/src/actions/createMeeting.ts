@@ -2,41 +2,41 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { IComment } from '../components/blog/PostDetails'
-import { ICommentForm } from '../components/blog/CommentForm'
+import { IMeeting } from '../components/meetings/MeetingsList'
+import { IMeetingForm } from '../components/meetings/MeetingForm'
 
 // Types and interfaces
-interface ICreateCommentSuccess {
-    type: typeof CREATE_COMMENT_SUCCESS
-    payload: IComment
+interface ICreateMeetingSuccess {
+    type: typeof CREATE_MEETING_SUCCESS
+    payload: IMeeting
 }
 
-interface ICreateCommentFail {
-    type: typeof CREATE_COMMENT_FAIL
+interface ICreateMeetingFail {
+    type: typeof CREATE_MEETING_FAIL
     payload: string
 }
 
-export type TDispatchCreateComment = ICreateCommentSuccess | ICreateCommentFail
+export type TDispatchCreateMeeting = ICreateMeetingSuccess | ICreateMeetingFail
 
 // Action
-const URL = 'http://localhost:8000/api/comments/'
-export const CREATE_COMMENT_SUCCESS = 'CREATE_COMMENT_SUCESS'
-export const CREATE_COMMENT_FAIL = 'CREATE_COMMENT_FAIL'
+const URL = 'http://localhost:8000/api/meetings/'
+export const CREATE_MEETING_SUCCESS = 'CREATE_MEETING_SUCESS'
+export const CREATE_MEETING_FAIL = 'CREATE_MEETING_FAIL'
 
-export default function createComment(form: ICommentForm) {
-    return async (dispatch: Dispatch<TDispatchCreateComment>) => {
+export default function createMeeting(form: IMeetingForm) {
+    return async (dispatch: Dispatch<TDispatchCreateMeeting>) => {
         try {
             const response = await axios.post(URL, form)
 
             dispatch({
-                type: CREATE_COMMENT_SUCCESS,
+                type: CREATE_MEETING_SUCCESS,
                 payload: response.data
             })
         } catch (error) {
             dispatch({
-                type: CREATE_COMMENT_FAIL,
+                type: CREATE_MEETING_FAIL,
                 payload:
-                    'Error while creating the comment. Check the input fields.'
+                    'Error while creating the meeting. Check the input fields.'
             })
 
             console.log(error)

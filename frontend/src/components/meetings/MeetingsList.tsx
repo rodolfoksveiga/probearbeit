@@ -1,7 +1,70 @@
 // Import components, functions, types, and variables
+import { useEffect } from 'react'
+import { connect } from 'react-redux'
+
+import fetchMeetings from '../../actions/fetchMeetings'
+import { TRootState } from '../../reducers/rootReducer'
+import MeetingCard from './MeetingCard'
 import { Container } from 'react-bootstrap'
 
-// Component
-export default function Home() {
-    return <Container className="h-75">Home</Container>
+// Types and interfaces
+export interface IMeeting {
+    id: number
+    date_time: string
+    local: string
+    mode: number
+    team1: string[]
+    team2: string[]
 }
+
+export type TMeetings = IMeeting[]
+
+interface IMeetingsListProps {
+    meetings: null | TMeetings
+    message: null | string
+    fetchMeetings: Function
+}
+
+// Component
+export function MeetingsList({
+    meetings,
+    message,
+    fetchMeetings
+}: IMeetingsListProps) {
+    useEffect(() => {
+        fetchMeetings()
+    }, [fetchMeetings])
+
+    return (
+        <Container fluid="md" className="d-flex flex-column align-items-center">
+            <h1 className="display-3">Blog Meetings</h1>
+            {message ? (
+                <p className="display-4">{message}</p>
+            ) : (
+                <Container className="d-flex flex-wrap justify-content-center align-items-center">
+                    {meetings &&
+                        meetings.map((meeting) => {
+                            return (
+                                <MeetingCard
+                                    key={meeting.id}
+                                    dateTime={meeting.date_time}
+                                    local={meeting.local}
+                                    mode={meeting.mode}
+                                    team1={meeting.team1}
+                                    team2={meeting.team2}
+                                />
+                            )
+                        })}
+                </Container>
+            )}
+        </Container>
+    )
+}
+
+// Redux
+const mapStateToProps = (state: TRootState) => ({
+    meetings: state.meetings.data,
+    message: state.meetings.message
+})
+
+export default connect(mapStateToProps, { fetchMeetings })(MeetingsList)

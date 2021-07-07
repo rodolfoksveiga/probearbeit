@@ -2,51 +2,51 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { TComments } from '../components/blog/PostDetails'
+import { TMeetings } from '../components/meetings/MeetingsList'
 
 // Types and interfaces
-interface IFetchCommentsLoading {
-    type: typeof FETCH_COMMENTS_LOADING
+interface IFetchMeetingsLoading {
+    type: typeof FETCH_MEETINGS_LOADING
 }
 
-interface IFetchCommentsSuccess {
-    type: typeof FETCH_COMMENTS_SUCCESS
-    payload: TComments
+interface IFetchMeetingsSuccess {
+    type: typeof FETCH_MEETINGS_SUCCESS
+    payload: TMeetings
 }
 
-interface IFetchCommentsFail {
-    type: typeof FETCH_COMMENTS_FAIL
+interface IFetchMeetingsFail {
+    type: typeof FETCH_MEETINGS_FAIL
     payload: string
 }
 
-export type TDispatchFetchComments =
-    | IFetchCommentsLoading
-    | IFetchCommentsSuccess
-    | IFetchCommentsFail
+export type TDispatchFetchMeetings =
+    | IFetchMeetingsLoading
+    | IFetchMeetingsSuccess
+    | IFetchMeetingsFail
 
 // Action
-const URL = 'http://localhost:8000/api/comments/'
-export const FETCH_COMMENTS_LOADING = 'FETCH_COMMENTS_LOADING'
-export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS'
-export const FETCH_COMMENTS_FAIL = 'FETCH_COMMENTS_FAIL'
+const URL = 'http://localhost:8000/api/meetings/'
+export const FETCH_MEETINGS_LOADING = 'FETCH_MEETINGS_LOADING'
+export const FETCH_MEETINGS_SUCCESS = 'FETCH_MEETINGS_SUCCESS'
+export const FETCH_MEETINGS_FAIL = 'FETCH_MEETINGS_FAIL'
 
-export default function fetchComments() {
-    return async (dispatch: Dispatch<TDispatchFetchComments>) => {
+export default function fetchMeetings() {
+    return async (dispatch: Dispatch<TDispatchFetchMeetings>) => {
         try {
             dispatch({
-                type: FETCH_COMMENTS_LOADING
+                type: FETCH_MEETINGS_LOADING
             })
 
             const response = await axios.get(URL)
 
             dispatch({
-                type: FETCH_COMMENTS_SUCCESS,
+                type: FETCH_MEETINGS_SUCCESS,
                 payload: response.data
             })
         } catch (error) {
             dispatch({
-                type: FETCH_COMMENTS_FAIL,
-                payload: 'Error while loading the comments. Reload the page.'
+                type: FETCH_MEETINGS_FAIL,
+                payload: 'Error while loading the meetings. Reload the page.'
             })
 
             console.log(error)
