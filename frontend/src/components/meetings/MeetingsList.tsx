@@ -1,11 +1,11 @@
 // Import components, functions, types, and variables
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 import fetchMeetings from '../../actions/fetchMeetings'
 import { TRootState } from '../../reducers/rootReducer'
 import MeetingCard from './MeetingCard'
-import { Container } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 
 // Types and interfaces
 export interface IMeeting {
@@ -31,13 +31,23 @@ export function MeetingsList({
     message,
     fetchMeetings
 }: IMeetingsListProps) {
+    const [triggerReload, setTriggerReload] = useState<boolean>(false)
+
     useEffect(() => {
         fetchMeetings()
-    }, [fetchMeetings])
+        setTriggerReload(false)
+    }, [fetchMeetings, triggerReload])
+
+    function handleTriggerReload() {
+        setTriggerReload(!triggerReload)
+    }
 
     return (
         <Container fluid="md" className="d-flex flex-column align-items-center">
             <h1 className="display-3">Blog Meetings</h1>
+            <Button variant="success" href="/meetings/create/">
+                Create new meeting
+            </Button>
             {message ? (
                 <p className="display-4">{message}</p>
             ) : (
@@ -47,11 +57,13 @@ export function MeetingsList({
                             return (
                                 <MeetingCard
                                     key={meeting.id}
+                                    meetingId={meeting.id}
                                     dateTime={meeting.date_time}
                                     local={meeting.local}
                                     mode={meeting.mode}
                                     team1={meeting.team1}
                                     team2={meeting.team2}
+                                    handleTriggerReload={handleTriggerReload}
                                 />
                             )
                         })}

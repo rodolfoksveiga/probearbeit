@@ -12,23 +12,14 @@ import {
 } from 'react-bootstrap'
 import * as yup from 'yup'
 
-import createMeeting from '../../actions/createMeeting'
-
-// Types and interfaces
-export interface IMeetingForm {
-    date_time: string
-    local: string
-    mode: number
-    team1: string
-    team2: string
-}
+import updateMeeting from '../../actions/updateMeeting'
+import { IMeetingForm } from './MeetingCreate'
+import { useHistory } from 'react-router-dom'
 
 interface IMeetingFormProps {
     initialFormData: IMeetingForm
     vertical: boolean
-    createMeeting: Function
-    handleToggleCreate?: Function
-    handleToggleUpdate?: Function
+    updateMeeting: Function
     handleTriggerReload: Function
 }
 
@@ -47,30 +38,13 @@ const FormSchema = yup.object().shape({
 export function MeetingForm({
     initialFormData,
     vertical,
-    createMeeting,
-    handleToggleCreate,
-    handleToggleUpdate,
+    updateMeeting,
     handleTriggerReload
 }: IMeetingFormProps) {
+    const history = useHistory()
+
     function handleSubmit(formData: IMeetingForm) {
-        if (handleToggleCreate) {
-            createMeeting(formData)
-            handleToggleCreate()
-        }
-        if (handleToggleUpdate) {
-            createMeeting(formData)
-            handleToggleUpdate()
-        }
-    }
-
-    function handleCancel() {
-        if (handleToggleCreate) {
-            handleToggleCreate()
-        }
-
-        if (handleToggleUpdate) {
-            handleToggleUpdate()
-        }
+        updateMeeting(formData)
     }
 
     return (
@@ -222,7 +196,9 @@ export function MeetingForm({
                                         </Button>
                                         <Button
                                             variant="danger"
-                                            onClick={handleCancel}
+                                            onClick={() =>
+                                                history.push('/meetings/')
+                                            }
                                         >
                                             Cancel
                                         </Button>
@@ -238,4 +214,4 @@ export function MeetingForm({
 }
 
 // Redux
-export default connect(null, { createMeeting })(MeetingForm)
+export default connect(null, { updateMeeting })(MeetingForm)

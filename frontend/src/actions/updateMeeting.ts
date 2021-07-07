@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { IMeetingForm } from '../components/meetings/MeetingForm'
+import { IMeetingForm } from '../components/meetings/MeetingCreate'
 
 // Types and interfaces
 interface IUpdateMeetingSuccess {
