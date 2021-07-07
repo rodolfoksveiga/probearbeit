@@ -7,12 +7,19 @@ from django.db.models import (
 
 class Player(Model):
     last_name = CharField(
-        _('Last Name'),
-        max_length=200
+        _("Player's last name"),
+        max_length=200,
+        unique=True
+    )
+    office_choices = (
+        ('munchen', 'Munschen'),
+        ('wurzburg', 'Wurzburg'),
+        ('berlin', 'Berlin')
     )
     office = CharField(
-        _('Mayflower office'),
-        max_length=200
+        _('Office'),
+        choices=office_choices,
+        max_length=50
     )
 
     def __str__(self):
