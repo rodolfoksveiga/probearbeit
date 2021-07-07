@@ -9,8 +9,6 @@ class MatchSerializer(serializers.ModelSerializer):
             'id',
             'atack_team1',
             'winner_team1',
-            'goals_team1',
-            'goals_team2',
             'meeting_id'
         ]
 

@@ -16,12 +16,6 @@ class Match(Model):
     winner_team1 = BooleanField(
         _('Did Team 1 win?')
     )
-    goals_team1 = PositiveIntegerField(
-        _('Goals scored by Team 1')
-    )
-    goals_team2 = PositiveIntegerField(
-        _('Goals scored by Team 2')
-    )
     meeting_id = ForeignKey(
         Meeting,
         on_delete=CASCADE,
@@ -29,5 +23,10 @@ class Match(Model):
     )
 
     def __str__(self):
-        return 'Team 1 {} x {} Team 2'.format(self.goals_team1, self.goals_team2)
+        if winner_team1:
+            winner = 'Team 1'
+        else:
+            winner = 'Team 2'
+
+        return 'Winner {}'.format(winner)
 
