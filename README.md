@@ -1,6 +1,6 @@
 # Probearbeit
 
-Full Stack web application designed to solve a test work at Mayflower.
+Full Stack web application designed to solve a test work at a private company.
 
 The repository contain two main folders, one for the backend and another for the frontend.
 
